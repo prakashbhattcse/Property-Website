@@ -1,10 +1,12 @@
 // src/pages/Login.js
 import React, { useState } from 'react';
 import { login } from '../apis/userApi';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -13,6 +15,7 @@ const Login = () => {
             // Save token to localStorage or state
             localStorage.setItem('token', response.data.token);
             // Redirect or show success message
+            navigate('/');
         } catch (error) {
             console.error('Error logging in:', error);
         }

@@ -52,25 +52,30 @@ const loginUser = async (req, res) => {
 
 
 const checkLoginStatus = async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1]; // Bearer token
+  // Directly get the token from the authorization header (no splitting)
+  const token = req.headers.authorization; 
 
   if (!token) {
     return res.status(401).json({ isLoggedIn: false });
   }
 
   try {
+    // Verify the token using JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
-    
+
+    // If user exists, send back the login status and user details
     if (user) {
       return res.json({ isLoggedIn: true, user });
     } else {
       return res.status(401).json({ isLoggedIn: false });
     }
   } catch (error) {
+    // In case of any error during token verification, send an unauthorized response
     return res.status(401).json({ isLoggedIn: false });
   }
 };
+
 
 module.exports = { registerUser, loginUser, checkLoginStatus };
 

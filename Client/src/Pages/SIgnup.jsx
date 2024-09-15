@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { signup } from '../apis/userApi';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await signup({ email, password, name });
             // Redirect or show success message
+            navigate('/login');
             alert('Signup successful');
         } catch (error) {
             console.error('Error signing up:', error);

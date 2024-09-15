@@ -26,16 +26,30 @@ const PropertyListing = () => {
         // Check login status
         const checkLoginStatus = async () => {
             try {
-            
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    setIsLoggedIn(false);
+                    return;
+                }
+
                 const response = await axios.get('http://localhost:3000/api/v1/auth/check', {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}` 
+                        Authorization: token
                     }
                 });
-                setIsLoggedIn(response.data.isLoggedIn);
+
+                if (response.data.isLoggedIn) {
+                    setIsLoggedIn(true);
+                } else {
+                    setIsLoggedIn(false);
+                    localStorage.removeItem('token');
+                    window.location.href = '/login';
+                }
             } catch (error) {
                 console.error('Error checking login status:', error);
                 setIsLoggedIn(false);
+                localStorage.removeItem('token'); // Clear invalid token
+                window.location.href = '/login'; // Redirect to login
             }
         };
 
@@ -57,29 +71,60 @@ const PropertyListing = () => {
 
     const handleCreateProperty = async (propertyData) => {
         try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('You must be logged in to create a property');
+                window.location.href = '/login';
+                return;
+            }
+
             await axios.post('http://localhost:3000/api/v1/properties/property', propertyData, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}` 
+                    Authorization: token
                 }
             });
+
             const response = await getAllProperties();
             setProperties(response.data);
             setFilteredProperties(response.data);
             setShowCreateForm(false);
         } catch (error) {
             console.error('Error creating property:', error);
+            if (error.response?.status === 401) {
+                if (error.response?.data?.isTokenExpires) {
+                    alert('Your session has expired. Please log in again.');
+                } else {
+                    alert('Unauthorized request. Please log in again.');
+                }
+                localStorage.removeItem('token');
+                window.location.href = '/';
+            }
         }
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+        window.location.href = '/login';
     };
 
     return (
         <div>
-            <h1>Property Listings</h1>
-            <Filter onFilter={handleFilter} />
+            {!isLoggedIn && (
+                <div>
+                    <button onClick={() => window.location.href = '/login'}>Login</button>
+                    <button onClick={() => window.location.href = '/signup'}>Register</button>
+                </div>
+            )}
+
             {isLoggedIn && (
                 <>
-                    <button onClick={() => setShowCreateForm(!showCreateForm)}>
-                        {showCreateForm ? 'Cancel' : 'Create Property'}
-                    </button>
+                    <div>
+                        <button onClick={() => setShowCreateForm(!showCreateForm)}>
+                            {showCreateForm ? 'Cancel' : 'Create Property'}
+                        </button>
+                        <button onClick={handleLogout}>Logout</button> {/* Logout button */}
+                    </div>
                     {showCreateForm && (
                         <div className="create-property-form">
                             <h2>Create New Property</h2>
@@ -125,12 +170,10 @@ const PropertyListing = () => {
                     )}
                 </>
             )}
-            {!isLoggedIn && (
-                <div>
-                    <button onClick={() => window.location.href = '/login'}>Login</button>
-                    <button onClick={() => window.location.href = '/signup'}>Register</button>
-                </div>
-            )}
+
+            <h1>Property Listings</h1>
+            <Filter onFilter={handleFilter} />
+
             <div className="property-list">
                 {filteredProperties.map(property => (
                     <PropertyCard key={property._id} property={property} />
