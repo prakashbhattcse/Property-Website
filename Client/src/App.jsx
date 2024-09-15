@@ -7,6 +7,7 @@ import './App.css'; // Import your CSS
 import Login from './Pages/Login';
 import Signup from './Pages/SIgnUp';
 import PropertyListing from './Pages/PropertyListing';
+import CreatePropertyPage from './Pages/createPropertyPage';
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/" element={<PropertyListing />} />
+                <Route path="/create-property" element={<CreatePropertyPage/>} />
             </Routes>
         </Router>
     );
