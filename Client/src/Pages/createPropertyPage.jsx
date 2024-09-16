@@ -42,7 +42,7 @@ const CreatePropertyPage = () => {
       if (editingProperty) {
         // Update property
         await axios.put(
-          `http://localhost:3000/api/v1/properties/property/${editingProperty._id}`,
+          "http://localhost:3000/api/v1/properties/property/${editingProperty._id}",
           formData,
           {
             headers: {
@@ -112,7 +112,7 @@ const CreatePropertyPage = () => {
       if (!token) return;
 
       await axios.delete(
-        `http://localhost:3000/api/v1/properties/property/${propertyId}`,
+        "http://localhost:3000/api/v1/properties/property/${propertyId}",
         {
           headers: {
             Authorization: token,

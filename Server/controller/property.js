@@ -29,12 +29,10 @@ const createProperty = async (req, res) => {
       owner: req.userId,
     });
     await newProperty.save();
-    res
-      .status(201)
-      .json({
-        message: "Property created successfully",
-        property: newProperty,
-      });
+    res.status(201).json({
+      message: "Property created successfully",
+      property: newProperty,
+    });
   } catch (error) {
     console.error("Error creating property:", error);
     res.status(500).json({ message: "Server error", error });
@@ -65,18 +63,24 @@ const getPropertyById = async (req, res) => {
   }
 };
 
-// Update property
-// const updateProperty = async (req, res) => {
-//     try {
-//         const updatedProperty = await Property.findByIdAndUpdate(req.params.id, req.body, { new: true });
-//         if (!updatedProperty) {
-//             return res.status(404).json({ message: 'Property not found' });
-//         }
-//         res.status(200).json({ message: 'Property updated', property: updatedProperty });
-//     } catch (error) {
-//         res.status(500).json({ message: 'Server error', error });
-//     }
-// };
+const updateProperty = async (req, res) => {
+  try {
+    const updatedProperty = await Property.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedProperty) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+    res
+      .status(200)
+      .json({ message: "Property updated", property: updatedProperty });
+  } catch (error) {
+    console.error("Error updating property:", error); // Added for debugging
+    res.status(500).json({ message: "Server error", error });
+  }
+};
 
 // Delete property
 const deleteProperty = async (req, res) => {
@@ -92,9 +96,22 @@ const deleteProperty = async (req, res) => {
   }
 };
 
+const getUserProperties = async (req, res) => {
+  try {
+    const userId = req.userId; // Assuming req.userId is set by verifyToken middleware
+    const properties = await Property.find({ owner: userId }); // Fetch properties listed by the user
+    res.status(200).json(properties);
+  } catch (error) {
+    console.error("Error fetching user properties:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
 module.exports = {
   createProperty,
   getAllProperties,
   getPropertyById,
   deleteProperty,
+  updateProperty,
+  getUserProperties,
 };

@@ -87,7 +87,7 @@ const PropertyListing = () => {
 
   return (
     <div>
-      {/* <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} /> */}
+      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <h1>Property Listings</h1>
       <Filter onFilter={handleFilter} />
 
