@@ -6,8 +6,9 @@ import "./App.css";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import PropertyListing from "./Pages/PropertyListing";
-import CreatePropertyPage from "./Pages/CreatePropertyPage";
+
 import Navbar from "./components/Navbar";
+import CreatePropertyPage from "./Pages/createPropertyPage";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
