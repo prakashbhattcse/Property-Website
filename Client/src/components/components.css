@@ -1,0 +1,10 @@
+/* NAVBAR COMPONENT */
+
+.navbar-container {
+    color: #828282;
+    background-color: #f1f5f7;
+    width: 99%;
+    margin: 8px auto;
+    padding: 1.6rem 1rem;
+    border-radius: 18px;
+}

@@ -1,4 +1,10 @@
-/* src/styles/Filter.css */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
 .filter-form {
   display: flex;
   flex-direction: column;
@@ -9,7 +15,8 @@
   margin-bottom: 5px;
 }
 
-.filter-form input, .filter-form select {
+.filter-form input,
+.filter-form select {
   padding: 8px;
   font-size: 16px;
 }
@@ -35,7 +42,7 @@
   padding: 16px;
   margin: 16px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 18rem;
 }
 
