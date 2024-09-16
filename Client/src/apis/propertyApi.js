@@ -2,7 +2,6 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3000/api/v1/properties";
 
-// Utility function to get the token from localStorage
 const getToken = () => localStorage.getItem("token");
 
 // Create a new property

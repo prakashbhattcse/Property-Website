@@ -3,8 +3,132 @@
 .navbar-container {
     color: #828282;
     background-color: #f1f5f7;
-    width: 99%;
+    width: 98%;
     margin: 8px auto;
-    padding: 1.6rem 1rem;
-    border-radius: 18px;
+    padding: 1rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+}
+
+
+.navbar-container button {
+    margin-right: 1rem;
+    padding: .6rem 2rem;
+    background-color: #1b1b1b;
+    color: white;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+
+}
+
+
+/* FILTERS start */
+
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.7rem;
+
+    button {
+        background-color: #1b1b1b;
+        border-radius: 5px;
+        padding: 10px;
+
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #95e347;
+        color: #1b1b1b;
+        font-weight: 600;
+    }
+
+}
+
+.filter-form {
+    display: flex;
+    gap: 1.5rem;
+    flex-direction: column;
+}
+
+
+.filter-form label {
+    margin-bottom: 5px;
+}
+
+.filter-form input,
+.filter-form select {
+    padding: 8px;
+    font-size: 16px;
+}
+
+
+.formLabelInput {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+
+    select {
+        border: 1px solid black;
+    }
+
+}
+
+
+
+.css-13cymwt-control {
+    border: 1px solid #1b1b1b !important;
+}
+
+
+
+
+
+
+
+
+
+/* PROPERTY CARD */
+
+
+.property-card {
+    /* border: 1px solid #ddd; */
+    padding: 16px;
+    margin: 16px;
+    border-radius: 8px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    width: 19rem;
+    background-color: #F5F5F5;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    position: relative;
+}
+
+.property-card img {
+    width: 100%;
+    height: 11rem;
+    border-radius: 8px;
+}
+
+.propertyType {
+    position: absolute;
+    background-color: #95e347;
+    padding: .5rem .8rem;
+    border-radius: 8px 0 12px 0;
+}
+
+.property-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: .5rem;
 }

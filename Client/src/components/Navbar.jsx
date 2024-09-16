@@ -11,14 +11,14 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
       <div className="navbar-container">
         {!isLoggedIn ? (
           <div>
+            <button onClick={() => navigate("/")}>Home</button>
             <button onClick={() => navigate("/login")}>Login</button>
             <button onClick={() => navigate("/signup")}>Register</button>
-            <button onClick={() => navigate("/")}>Home</button>
           </div>
         ) : (
           <div>
             <button onClick={() => navigate("/create-property")}>
-              Create Property
+              Listed Properties
             </button>
             <button onClick={handleLogout}>Logout</button>
           </div>

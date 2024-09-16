@@ -4,11 +4,14 @@ import PropertyCard from "../components/PropertyCard";
 import Filter from "../components/Filter";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
+import "./Pages.css"; // Import the CSS file
 
 const PropertyListing = () => {
   const [properties, setProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -46,18 +49,18 @@ const PropertyListing = () => {
         } else {
           setIsLoggedIn(false);
           localStorage.removeItem("token");
-          window.location.href = "/login";
+          navigate("/login");
         }
       } catch (error) {
         console.error("Error checking login status:", error);
         setIsLoggedIn(false);
         localStorage.removeItem("token");
-        window.location.href = "/login";
+        navigate("/login");
       }
     };
 
     checkLoginStatus();
-  }, []);
+  }, [navigate]);
 
   const handleFilter = (filters) => {
     setFilteredProperties(
@@ -82,23 +85,25 @@ const PropertyListing = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
-    window.location.href = "/login";
+    navigate("/");
   };
 
   return (
     <div>
       <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-      <h1>Property Listings</h1>
-      <Filter onFilter={handleFilter} />
-
-      <div className="property-list">
-        {filteredProperties.length > 0 ? (
-          filteredProperties.map((property) => (
-            <PropertyCard key={property._id} property={property} />
-          ))
-        ) : (
-          <p>No properties found.</p>
-        )}
+      <div className="property-listing-container">
+        <div className="filter-container">
+          <Filter onFilter={handleFilter} />
+        </div>
+        <div className="property-list">
+          {filteredProperties.length > 0 ? (
+            filteredProperties.map((property) => (
+              <PropertyCard key={property._id} property={property} />
+            ))
+          ) : (
+            <p>No properties found.</p>
+          )}
+        </div>
       </div>
     </div>
   );
